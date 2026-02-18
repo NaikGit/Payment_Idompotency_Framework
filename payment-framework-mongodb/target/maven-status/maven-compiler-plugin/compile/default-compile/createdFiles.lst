@@ -1,0 +1,4 @@
+com/dev/payments/framework/mongodb/repository/MongoOutboxRepository.class
+com/dev/payments/framework/mongodb/repository/MongoProcessedEventRepository.class
+com/dev/payments/framework/mongodb/document/OutboxEntryDocument.class
+com/dev/payments/framework/mongodb/document/ProcessedEventDocument.class

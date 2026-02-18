@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="payment-framework-starter" />
+        <module name="payment-framework-ibmmq" />
+        <module name="payment-framework-jpa" />
+        <module name="payment-framework-mongodb" />
+        <module name="payment-framework-core" />
+        <module name="payment-framework-kafka" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

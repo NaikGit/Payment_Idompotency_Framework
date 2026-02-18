@@ -1,0 +1,7 @@
+com/dev/payments/framework/jpa/repository/JpaOutboxRepository$1.class
+com/dev/payments/framework/jpa/repository/JpaProcessedEventRepository.class
+com/dev/payments/framework/jpa/repository/JpaOutboxRepository.class
+com/dev/payments/framework/jpa/repository/OutboxEntryJpaRepository.class
+com/dev/payments/framework/jpa/entity/OutboxEntryEntity.class
+com/dev/payments/framework/jpa/repository/ProcessedEventJpaRepository.class
+com/dev/payments/framework/jpa/entity/ProcessedEventEntity.class

@@ -1,0 +1,4 @@
+com/dev/payments/framework/kafka/listener/IdempotentKafkaListener.class
+com/dev/payments/framework/kafka/config/IdempotentKafkaListenerFactory$KafkaProperties.class
+com/dev/payments/framework/kafka/config/IdempotentKafkaListenerFactory$KafkaListenerConfig.class
+com/dev/payments/framework/kafka/config/IdempotentKafkaListenerFactory.class
