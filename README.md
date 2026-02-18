@@ -221,12 +221,6 @@ The framework handles this by:
 
 If downstream creates a duplicate on retry, that's a downstream problem - but you'll have clear audit trail to identify and fix it.
 
-## Support
 
-- Internal Wiki: [link]
-- Slack: #payment-framework
-- Issues: [internal JIRA]
 
-## License
 
-Internal use only. Property of [Bank Name].
