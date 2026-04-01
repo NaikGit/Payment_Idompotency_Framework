@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.bank.payments</groupId>
+    <artifactId>payment-idempotency-framework</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Payment Idempotency Framework</name>
+    <description>
+        Framework for building idempotent payment processors with state machine discipline.
+        Prevents duplicate payments through architectural enforcement.
+    </description>
+
+    <modules>
+        <module>payment-framework-core</module>
+        <module>payment-framework-jpa</module>
+        <module>payment-framework-mongodb</module>
+        <module>payment-framework-ibmmq</module>
+        <module>payment-framework-kafka</module>
+        <module>payment-framework-starter</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- Spring Boot 3.x -->
+        <spring-boot.version>3.2.0</spring-boot.version>
+        
+        <!-- Observability -->
+        <micrometer.version>1.12.0</micrometer.version>
+        
+        <!-- Testing -->
+        <junit.version>5.10.0</junit.version>
+        <testcontainers.version>1.19.3</testcontainers.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot BOM -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Internal modules -->
+            <dependency>
+                <groupId>com.bank.payments</groupId>
+                <artifactId>payment-framework-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bank.payments</groupId>
+                <artifactId>payment-framework-jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bank.payments</groupId>
+                <artifactId>payment-framework-mongodb</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bank.payments</groupId>
+                <artifactId>payment-framework-ibmmq</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bank.payments</groupId>
+                <artifactId>payment-framework-kafka</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Micrometer for Prometheus metrics -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>${micrometer.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>internal-releases</id>
+            <name>Internal Releases</name>
+            <url>${env.MAVEN_REPO_URL}/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>internal-snapshots</id>
+            <name>Internal Snapshots</name>
+            <url>${env.MAVEN_REPO_URL}/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none        # schema.sql drives DDL
+    show-sql: false
+  sql:
+    init:
+      mode: always          # always run schema.sql in tests

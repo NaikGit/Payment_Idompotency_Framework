@@ -1,0 +1,126 @@
+# ============================================================================
+# Payment Idempotency Framework Configuration
+# ============================================================================
+# Copy this to your application's application.yml and customize as needed.
+
+payment:
+  framework:
+    # Master switch to enable/disable the framework
+    enabled: true
+    
+    # Outbox processor configuration
+    outbox:
+      # Enable embedded outbox processor
+      # Set to false if running as a separate service
+      enabled: true
+      
+      # How often to poll for pending entries (milliseconds)
+      poll-interval-ms: 1000
+      
+      # Number of entries to fetch per poll
+      batch-size: 10
+      
+      # Number of worker threads for parallel delivery
+      worker-threads: 4
+      
+      # Maximum retry attempts before marking as failed
+      max-retries: 5
+      
+      # Base delay for exponential backoff (seconds)
+      # Actual delays: 30s, 60s, 120s, 240s, 480s
+      retry-base-delay-seconds: 30
+      
+      # Maximum delay cap (seconds) - 1 hour
+      retry-max-delay-seconds: 3600
+      
+      # How long a processor holds a lock on an entry (seconds)
+      # Should be longer than delivery-timeout-seconds
+      lock-duration-seconds: 60
+      
+      # HTTP delivery timeout (seconds)
+      delivery-timeout-seconds: 30
+      
+      # How long to keep delivered entries (hours)
+      # Used for cleanup job
+      retention-hours: 168  # 7 days
+
+# ============================================================================
+# Database Configuration (JPA/Oracle example)
+# ============================================================================
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/ORCLPDB1
+    username: ${DB_USERNAME:payment_user}
+    password: ${DB_PASSWORD:payment_pass}
+    driver-class-name: oracle.jdbc.OracleDriver
+    
+    # Connection pool settings
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 20000
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Use 'create' for first run, then 'validate'
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+        format_sql: true
+    show-sql: false
+
+# ============================================================================
+# IBM MQ Configuration (if using IBM MQ)
+# ============================================================================
+ibm:
+  mq:
+    queue-manager: ${MQ_QUEUE_MANAGER:QM1}
+    channel: ${MQ_CHANNEL:DEV.APP.SVRCONN}
+    conn-name: ${MQ_HOST:localhost}(${MQ_PORT:1414})
+    user: ${MQ_USER:app}
+    password: ${MQ_PASSWORD:passw0rd}
+
+# ============================================================================
+# Kafka Configuration (if using Kafka)
+# ============================================================================
+# spring:
+#   kafka:
+#     bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+#     consumer:
+#       group-id: ${KAFKA_GROUP_ID:payment-processor}
+#       auto-offset-reset: earliest
+#       enable-auto-commit: false  # Framework handles commits
+#     producer:
+#       acks: all
+#       retries: 3
+
+# ============================================================================
+# Metrics / Prometheus
+# ============================================================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name:payment-service}
+      environment: ${ENVIRONMENT:dev}
+
+# ============================================================================
+# Logging
+# ============================================================================
+logging:
+  level:
+    com.dev.payments.framework: INFO
+    # Set to DEBUG for troubleshooting
+    # com.dev.payments.framework: DEBUG
+    
+    # SQL logging (development only)
+    # org.hibernate.SQL: DEBUG
+    # org.hibernate.type.descriptor.sql: TRACE
